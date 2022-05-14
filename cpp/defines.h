@@ -4,6 +4,7 @@
 #include <vector>
 #include <chrono>
 #include <stdexcept>
+#include <thread>
 
 typedef struct attribute
 {
@@ -18,7 +19,9 @@ typedef struct pet
     int max_food;
     int cur_food;
     int food_per_int;
-    int value;
+    int id;
+    std::string head;
+    std::string chest;
 } pet;
 
 typedef struct animal_type
