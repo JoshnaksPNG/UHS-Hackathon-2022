@@ -3,16 +3,31 @@
 
 #define ATTR_FILE_LOC "/Users/moose/UHS-Hackathon-2022/back_end_data/attributes.json"
 #define TYPES_FILE_LOC "/Users/moose/UHS-Hackathon-2022/back_end_data/pet_types.json"
+#define TRANSP_FIL_LOC "/Users/moose/UHS-Hackathon-2022/pp.json"
 
 int food_store = 100;
+int topId = 0;
+int maxRarity = 15;
+int maxCom = 5;
+int day = 0;
 std::vector<pet> pets;
 std::vector<attribute> attribute_library;
 std::vector<animal_type> animal_library;
 
 using json = nlohmann::json;
 
+
+pet getrandpet(int maxID, int maxFood, std::string name, int qcount);
+std::string getrandpart();
+void runnode();
+void runloop();
+json getstate(pet* primary);
+
 int main ()
 {
+    //seed our randoms
+    auto t = std::chrono::system_clock::now().time_since_epoch();
+    srand(t.count());
     //get a file stream of the attributes
     std::ifstream lib;
     lib.open(ATTR_FILE_LOC, std::ios::in);
@@ -75,19 +90,96 @@ int main ()
     lib_content.clear();
     j2.clear();
     std::cout << "loaded " << count << " types...\n";
-    std::cout << "Initilizing frontend\n";
-
-
-    //TODO ADD THE INIT BACKEND FOR NODE RUN
-
-    //YEES ADD IT IN HERE
-
-
-    srand(TIME_UTC);
-    int ran = rand() % animal_library.size();
-    pet starter;
-    starter.name = "penis";
-    starter.max_food = 10;
-    starter.cur_food = 10;
+    std::cout << "initilizing frontend...\n";
+    pet first = getrandpet(topId, 10, "Fluffles", 2);
+    pets.push_back(first);
+    runloop();
+    std::cout << "Program done!";
     return 0;
+}
+
+pet getrandpet(int maxID, int maxFood, std::string name, int qcount)
+{
+    pet starter;
+    starter.head = getrandpart();
+    starter.chest = getrandpart();
+    starter.name = name;
+    starter.max_food = rand() % maxFood + 5;
+    starter.cur_food = starter.max_food;
+    starter.id = maxID;
+    starter.food_per_int = rand() % maxCom + 1;
+    for (int i = 0; i < qcount; ++i)
+    {
+        attribute r = attribute_library[(rand() % attribute_library.size())];
+        starter.qualities.push_back(r);
+    }
+    return starter;
+}
+
+std::string getrandpart()
+{
+    std::string out;
+    while (true)
+    {
+        int ran = rand() % animal_library.size();
+        int ran2 = rand() % maxRarity;
+        if (animal_library[ran].rarity <= ran2)
+        {
+            out = animal_library[ran].name;
+            break;
+        }
+    }
+    return out;
+}
+
+void runnode()
+{
+    system("node .");
+}
+
+void runloop()
+{
+    std::cout << "generating handshake...\n";
+    pet first = pets[0];
+    json shake = getstate(&first);
+    std::ofstream o(TRANSP_FIL_LOC, std::ofstream::trunc);
+    o << std::setw(4) << shake << std::endl;
+    o.close();
+    std::cout << "running main loop...\n";
+    //std::thread node(runnode);
+    std::cout << "node launched...\n";
+    bool shouldexit = false;
+    while (!shouldexit)
+    {
+
+    }
+    //node.join();
+}
+
+json getstate(pet* primary)
+{
+    json attr;
+    for (attribute i : primary->qualities)
+    {
+        attr.push_back({i.name, i.value});
+    }
+    json shake = 
+    {
+        "currentanimal",
+        {
+                {"name", primary->name},
+                {"head", primary->head},
+                {"chest", primary->chest},
+                {"maxfood", primary->max_food},
+                {"curfood", primary->cur_food},
+                {"id", primary->id},
+                {"attributes", attr}
+        },
+        "world",
+        {
+            {"feedstore", food_store},
+            {"day", day}
+        }
+    };
+    return shake;
 }
