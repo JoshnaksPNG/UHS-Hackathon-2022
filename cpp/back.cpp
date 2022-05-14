@@ -3,7 +3,8 @@
 
 #define ATTR_FILE_LOC "/Users/moose/UHS-Hackathon-2022/back_end_data/attributes.json"
 #define TYPES_FILE_LOC "/Users/moose/UHS-Hackathon-2022/back_end_data/pet_types.json"
-#define TRANSP_FIL_LOC "/Users/moose/UHS-Hackathon-2022/pp.json"
+#define TRANSP_FIL_LOC "/Users/moose/UHS-Hackathon-2022/c2j.json"
+#define READ_FILE_LOC "/Users/moose/UHS-Hackathon-2022/j2c.json"
 
 int food_store = 100;
 int topId = 0;
@@ -22,6 +23,7 @@ std::string getrandpart();
 void runnode();
 void runloop();
 json getstate(pet* primary);
+state readstate();
 
 int main ()
 {
@@ -104,9 +106,11 @@ pet getrandpet(int maxID, int maxFood, std::string name, int qcount)
     starter.head = getrandpart();
     starter.chest = getrandpart();
     starter.name = name;
+    starter.age = 0;
     starter.max_food = rand() % maxFood + 5;
     starter.cur_food = starter.max_food;
     starter.id = maxID;
+    topId++;
     starter.food_per_int = rand() % maxCom + 1;
     for (int i = 0; i < qcount; ++i)
     {
@@ -146,14 +150,145 @@ void runloop()
     o << std::setw(4) << shake << std::endl;
     o.close();
     std::cout << "running main loop...\n";
-    //std::thread node(runnode);
+    std::thread node(runnode);
     std::cout << "node launched...\n";
     bool shouldexit = false;
+    int laststamp = 0;
+    int mainindex = 0;
+    int wait = 0;
     while (!shouldexit)
     {
+        wait++;
+        if (pets.size() == 0)
+        {
+            break;
+        }
+        state action = readstate();
+        if (first.id != action.id)
+        {
+            for (int i = 0; i < pets.size(); ++i)
+            {
+                if (pets[i].id == action.id)
+                {
+                    first = pets[i];
+                    mainindex = first.id;
+                }
+            }
+        }
+        if (action.stamp != laststamp)
+        {
+            if (action.name == "kill")
+            {
+                for (int i = 0; i < pets.size(); ++i)
+                {
+                    if (pets[i].id = action.id)
+                    {
+                        pets.erase(pets.begin() + i);
+                        if (pets.size() == 0)
+                        {
+                            shouldexit == true;
+                        }
+                        if ((i-1) > 0)
+                        {
+                            mainindex = i-1;
+                        }
+                        else
+                        {
+                            mainindex = i+1;
+                        }
+                    }
+                }
 
+                //todo improve food quality 
+                int accumulator = 0;
+                for (int i = 0; i < first.qualities.size(); ++i)
+                {
+                    accumulator += first.qualities[i].value;
+                }
+                food_store += accumulator + first.age;
+            }
+            else if (action.name == "new")
+            {
+                //todo FIX THIS BAD BOY
+                pet npet = getrandpet(topId, 20, "William", 2);
+                pets.push_back(npet);
+                mainindex = (pets.size() - 1);
+            }
+            else if (action.name == "exit")
+            {
+                shouldexit = true;
+            }
+            else if (action.name == "moveleft")
+            {
+                if ((pets.size() - 1) < 0)
+                {
+                    mainindex = pets.size();
+                }
+                else
+                {
+                    mainindex = (mainindex - 1);
+                }
+                first = pets[mainindex];
+            }
+            else if (action.name == "moveright")
+            {
+                if ((pets.size() + 1) > pets.size())
+                {
+                    mainindex = 0;
+                }
+                else
+                {
+                    mainindex = (mainindex + 1);
+                }
+                first = pets[mainindex];
+            }
+
+            
+        }
+        laststamp = action.stamp;
+
+        //do the daily handling
+        if (wait > 1000)
+        {
+            wait = 0;
+            day += 1;
+            for (pet p : pets)
+            {
+                p.cur_food -= p.food_per_int;
+                if (p.cur_food <= 0)
+                {
+                    for (int i = 0; i < pets.size(); ++i)
+                    {
+                        if (pets[i].id = action.id)
+                        {
+                            pets.erase(pets.begin() + i);
+                            if (pets.size() == 0)
+                            {
+                                shouldexit == true;
+                            }
+                            if ((i-1) > 0)
+                            {
+                                mainindex = i-1;
+                            }
+                            else
+                            {
+                                mainindex = i+1;
+                            }
+                        }
+                    }
+                }
+                p.age += 1;
+            }
+        }
+
+        //push the new state
+        json shake = getstate(&first);
+        std::ofstream o(TRANSP_FIL_LOC, std::ofstream::trunc);
+        o << std::setw(4) << shake << std::endl;
+        o.close();
     }
-    //node.join();
+
+    node.join();
 }
 
 json getstate(pet* primary)
@@ -177,9 +312,34 @@ json getstate(pet* primary)
         },
         "world",
         {
+            {"petcount", pets.size()},
             {"feedstore", food_store},
             {"day", day}
         }
     };
     return shake;
+}
+
+state readstate()
+{
+    std::ifstream lib;
+    lib.open(READ_FILE_LOC, std::ios::in);
+    std::string lib_content;
+    char byte = 0;
+    while (lib.get(byte))
+    {
+        if (byte != '\n' && byte != '\t' && byte != ' ')
+        {
+            lib_content += byte;
+        }
+    }
+    lib.close();
+    //parse these attributes into a json file then read them into the proper std::vector
+    state out;
+    auto j = json::parse(lib_content.c_str());
+    out.id = j["currentAnimal"];
+    out.name = j["currentAction"];
+    out.stamp = j["stamp"];
+    attribute out;
+    return out;
 }

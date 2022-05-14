@@ -20,6 +20,7 @@ typedef struct pet
     int cur_food;
     int food_per_int;
     int id;
+    int age;
     std::string head;
     std::string chest;
 } pet;
@@ -29,3 +30,10 @@ typedef struct animal_type
     std::string name;
     int rarity;
 } animal_type;
+
+typedef struct state
+{
+    std::string name;
+    int id;
+    int stamp;
+} state;
