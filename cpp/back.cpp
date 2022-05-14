@@ -3,11 +3,13 @@
 
 #define ATTR_FILE_LOC "/Users/moose/UHS-Hackathon-2022/back_end_data/attributes.json"
 #define TYPES_FILE_LOC "/Users/moose/UHS-Hackathon-2022/back_end_data/pet_types.json"
+#define TRANSP_FIL_LOC "/Users/moose/UHS-Hackathon-2022/pp.json"
 
 int food_store = 100;
 int topId = 0;
 int maxRarity = 15;
 int maxCom = 5;
+int day = 0;
 std::vector<pet> pets;
 std::vector<attribute> attribute_library;
 std::vector<animal_type> animal_library;
@@ -15,10 +17,11 @@ std::vector<animal_type> animal_library;
 using json = nlohmann::json;
 
 
-pet getrandpet(int maxID, int maxFood, std::string name);
+pet getrandpet(int maxID, int maxFood, std::string name, int qcount);
 std::string getrandpart();
 void runnode();
 void runloop();
+json getstate(pet* primary);
 
 int main ()
 {
@@ -87,19 +90,15 @@ int main ()
     lib_content.clear();
     j2.clear();
     std::cout << "loaded " << count << " types...\n";
-    std::cout << "Initilizing frontend\n";
-
-    
-
-
-    pet first = getrandpet(topId, 10, "Fluffles");
+    std::cout << "initilizing frontend...\n";
+    pet first = getrandpet(topId, 10, "Fluffles", 2);
     pets.push_back(first);
-    //runloop();
+    runloop();
     std::cout << "Program done!";
     return 0;
 }
 
-pet getrandpet(int maxID, int maxFood, std::string name)
+pet getrandpet(int maxID, int maxFood, std::string name, int qcount)
 {
     pet starter;
     starter.head = getrandpart();
@@ -109,6 +108,11 @@ pet getrandpet(int maxID, int maxFood, std::string name)
     starter.cur_food = starter.max_food;
     starter.id = maxID;
     starter.food_per_int = rand() % maxCom + 1;
+    for (int i = 0; i < qcount; ++i)
+    {
+        attribute r = attribute_library[(rand() % attribute_library.size())];
+        starter.qualities.push_back(r);
+    }
     return starter;
 }
 
@@ -135,13 +139,47 @@ void runnode()
 
 void runloop()
 {
-    std::cout << "Running main loop";
-    std::thread node(runnode);
-    std::cout << "Node Launched!";
+    std::cout << "generating handshake...\n";
+    pet first = pets[0];
+    json shake = getstate(&first);
+    std::ofstream o(TRANSP_FIL_LOC, std::ofstream::trunc);
+    o << std::setw(4) << shake << std::endl;
+    o.close();
+    std::cout << "running main loop...\n";
+    //std::thread node(runnode);
+    std::cout << "node launched...\n";
     bool shouldexit = false;
     while (!shouldexit)
     {
 
     }
-    node.join();
+    //node.join();
+}
+
+json getstate(pet* primary)
+{
+    json attr;
+    for (attribute i : primary->qualities)
+    {
+        attr.push_back({i.name, i.value});
+    }
+    json shake = 
+    {
+        "currentanimal",
+        {
+                {"name", primary->name},
+                {"head", primary->head},
+                {"chest", primary->chest},
+                {"maxfood", primary->max_food},
+                {"curfood", primary->cur_food},
+                {"id", primary->id},
+                {"attributes", attr}
+        },
+        "world",
+        {
+            {"feedstore", food_store},
+            {"day", day}
+        }
+    };
+    return shake;
 }
