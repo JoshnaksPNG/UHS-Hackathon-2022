@@ -9,12 +9,13 @@ const app = express();
 const port = process.env.PORT || "8000";
 
 //App Configuration
-
+app.use(express.static("express"));
 
 //Routes Definitions
 app.get("/", (req, res) =>
 {
-    res.status(200).send("IOjBUFHLAF. :)")
+    //res.status(200).send("IOjBUFHLAF. :)");
+    res.sendFile(__dirname +'/express/index.html');
 });
 
 //Server Activation
