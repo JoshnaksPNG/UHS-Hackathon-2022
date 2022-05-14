@@ -1,10 +1,12 @@
 {
-    "acount" : 7,
+    "acount" : 8,
     "a0" : ["shiny", 10],
     "a1" : ["ugly", 1],
     "a2" : ["fluffy", 8],
     "a3" : ["happy", 5],
     "a4" : ["sad", 2],
     "a5" : ["pretty", 7],
-    "a6" : ["caloric", 11]
+    "a6" : ["caloric", 11],
+    "a7" : ["upbeat", 6],
+    "a8" : ["spiffy", 4]
 }
