@@ -1,0 +1,27 @@
+[
+    "currentanimal",
+    {
+        "attributes": [
+            [
+                "shiny",
+                10
+            ],
+            [
+                "shiny",
+                10
+            ]
+        ],
+        "chest": "tiger",
+        "curfood": 14,
+        "head": "rhino",
+        "id": 0,
+        "maxfood": 14,
+        "name": "Fluffles"
+    },
+    "world",
+    {
+        "day": 43,
+        "feedstore": 100,
+        "petcount": 1
+    }
+]
