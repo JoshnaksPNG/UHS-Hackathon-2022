@@ -1,0 +1,22 @@
+{
+  "name": "uhs-hackathon-2022",
+  "version": "1.0.0",
+  "description": "Project for the UHS 2022 Hackathon",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoshnaksPNG/UHS-Hackathon-2022.git"
+  },
+  "author": "JoshnaksPNG, MooseTheMoosieMoose, JsephGriff",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JoshnaksPNG/UHS-Hackathon-2022/issues"
+  },
+  "homepage": "https://github.com/JoshnaksPNG/UHS-Hackathon-2022#readme",
+  "dependencies": {
+    "math.js": "^1.1.46"
+  }
+}
