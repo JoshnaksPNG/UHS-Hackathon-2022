@@ -181,12 +181,12 @@ void runloop()
             {
                 for (int i = 0; i < pets.size(); ++i)
                 {
-                    if (pets[i].id = action.id)
+                    if (pets[i].id == action.id)
                     {
                         pets.erase(pets.begin() + i);
                         if (pets.size() == 0)
                         {
-                            shouldexit == true;
+                            shouldexit = true;
                         }
                         if ((i-1) > 0)
                         {
@@ -259,12 +259,12 @@ void runloop()
                 {
                     for (int i = 0; i < pets.size(); ++i)
                     {
-                        if (pets[i].id = action.id)
+                        if (pets[i].id == action.id)
                         {
                             pets.erase(pets.begin() + i);
                             if (pets.size() == 0)
                             {
-                                shouldexit == true;
+                                shouldexit = true;
                             }
                             if ((i-1) > 0)
                             {
@@ -340,6 +340,5 @@ state readstate()
     out.id = j["currentAnimal"];
     out.name = j["currentAction"];
     out.stamp = j["stamp"];
-    attribute out;
     return out;
 }
