@@ -21,6 +21,8 @@ rbutt.src = "./gameAssets/RightBracket.png";
 
 let currentAnID = 0;
 
+let sendID = 1;
+
 //Classes
 class Button 
 {
@@ -64,6 +66,7 @@ window.main = () =>
         //Work With Current Data
         head.src = "./animalAssets/heads/" + yoinkHead(data.currentanimal.head);
         body.src = "./animalAssets/bodies/" + yoinkBody(data.currentanimal.chest);
+        currentAnID = data.currentanimal.id;
 
         ctx.drawImage(bground, 0, 0);
         ctx.drawImage(rbutt, 800, 250);
@@ -124,7 +127,8 @@ function creatureLeft (creatureID)
         body: JSON.stringify(
         {
             currentAction: "moveleft",
-            currentAnimal: creatureID
+            currentAnimal: creatureID,
+            stamp: sendID
         })
     });
 }
@@ -140,7 +144,8 @@ function creatureRight (creatureID)
         body: JSON.stringify(
         {
             currentAction: "moveright",
-            currentAnimal: creatureID
+            currentAnimal: creatureID,
+            stamp:sendID
         })
     });
 }
@@ -156,7 +161,8 @@ function killCreature (creatureID)
         body: JSON.stringify(
         {
             currentAction: "kill",
-            currentAnimal: creatureID
+            currentAnimal: creatureID,
+            stamp: sendID
         })
     });
 }
@@ -172,7 +178,8 @@ function newCreature ()
         body: JSON.stringify(
         {
             currentAction: "new",
-            currentAnimal: 0
+            currentAnimal: 0,
+            stamp: sendID
         })
     });
 }
@@ -188,7 +195,8 @@ function exit ()
         body: JSON.stringify(
         {
             currentAction: "exit",
-            currentAnimal: 0
+            currentAnimal: 0,
+            stamp:sendID
         })
     });
 }
