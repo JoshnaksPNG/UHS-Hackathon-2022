@@ -14,11 +14,13 @@ int day = 0;
 std::vector<pet> pets;
 std::vector<attribute> attribute_library;
 std::vector<animal_type> animal_library;
+std::vector<std::string> names_list = {"Williams", "Charles", "Conklin", "Joseph", "Moose", "Josh", "Juliana Joy",
+"Griffalililith", "Mike", "Gregory", "John", "Jeffery", "Smith", "Cicero", "Denver", "Daryyll", "Luna", "Bella", "Lily", "Lucy", "Nala", "Kitty", "Chloe", "Stella", "Zoe", "Lola"};
 
 using json = nlohmann::json;
 
 
-pet getrandpet(int maxID, int maxFood, std::string name, int qcount);
+pet getrandpet(int maxID, int maxFood, int qcount);
 std::string getrandpart();
 void runnode();
 void runloop();
@@ -93,19 +95,20 @@ int main ()
     j2.clear();
     std::cout << "loaded " << count << " types...\n";
     std::cout << "initilizing frontend...\n";
-    pet first = getrandpet(topId, 10, "Fluffles", 2);
+    pet first = getrandpet(topId, 10, (rand() % 5 + 1));
     pets.push_back(first);
     runloop();
     std::cout << "Program done!";
     return 0;
 }
 
-pet getrandpet(int maxID, int maxFood, std::string name, int qcount)
+pet getrandpet(int maxID, int maxFood, int qcount)
 {
     pet starter;
+    
     starter.head = getrandpart();
     starter.chest = getrandpart();
-    starter.name = name;
+    starter.name = names_list[rand() % names_list.size()];
     starter.age = 0;
     starter.max_food = rand() % maxFood + 5;
     starter.cur_food = starter.max_food;
@@ -150,7 +153,9 @@ void runloop()
     o << std::setw(4) << shake << std::endl;
     o.close();
     std::cout << "running main loop...\n";
+
     std::thread node(runnode);
+
     std::cout << "node launched...\n";
     bool shouldexit = false;
     int laststamp = 0;
@@ -210,7 +215,7 @@ void runloop()
             else if (action.name == "new")
             {
                 //todo FIX THIS BAD BOY
-                pet npet = getrandpet(topId, 20, "William", 2);
+                pet npet = getrandpet(topId, 20, (rand() % 5 + 1));
                 pets.push_back(npet);
                 mainindex = (pets.size() - 1);
             }
@@ -298,9 +303,8 @@ json getstate(pet* primary)
     {
         attr.push_back({i.name, i.value});
     }
-    json shake = 
-    {
-        "currentanimal",
+    json shake = {
+        {"currentanimal",
         {
                 {"name", primary->name},
                 {"head", primary->head},
@@ -309,13 +313,13 @@ json getstate(pet* primary)
                 {"curfood", primary->cur_food},
                 {"id", primary->id},
                 {"attributes", attr}
-        },
-        "world",
+        }},
+        {"world",
         {
             {"petcount", pets.size()},
             {"feedstore", food_store},
             {"day", day}
-        }
+        }}
     };
     return shake;
 }

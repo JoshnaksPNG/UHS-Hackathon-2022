@@ -1,27 +1,33 @@
-[
-    "currentanimal",
-    {
+{
+    "currentanimal": {
         "attributes": [
             [
-                "shiny",
-                10
+                "ugly",
+                1
             ],
             [
-                "shiny",
-                10
+                "sad",
+                2
+            ],
+            [
+                "sad",
+                2
+            ],
+            [
+                "sad",
+                2
             ]
         ],
-        "chest": "tiger",
-        "curfood": 14,
-        "head": "rhino",
+        "chest": "zebra",
+        "curfood": 5,
+        "head": "tiger",
         "id": 0,
-        "maxfood": 14,
-        "name": "Fluffles"
+        "maxfood": 5,
+        "name": "John"
     },
-    "world",
-    {
-        "day": 43,
+    "world": {
+        "day": 0,
         "feedstore": 100,
         "petcount": 1
     }
-]
+}
