@@ -22,7 +22,7 @@ app.get("/", (req, res) =>
 app.post("/request", (req, res) =>
 {
     console.log(req.body);
-    fs.fileWriteSync(__dirname + "/j2c.json", JSON.stringify(req.body, null, 4));
+    fs.writeFileSync(__dirname + "/j2c.json", JSON.stringify(req.body, null, 4));
 });
 
 //Server Activation
@@ -37,7 +37,7 @@ try
     read = JSON.parse(fs.readFileSync(__dirname + "/c2j.json"));
 } catch
 {
-    
+
 }
 
 
