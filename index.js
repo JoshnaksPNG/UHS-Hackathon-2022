@@ -31,7 +31,15 @@ app.listen(port, () =>
     console.log(`Listening to requests on http://localhost:${port}`);
 });
 
-let read = JSON.parse(fs.readFileSync(__dirname + "/c2j.json"));
+let read;
+try
+{
+    read = JSON.parse(fs.readFileSync(__dirname + "/c2j.json"));
+} catch
+{
+    
+}
+
 
 fs.watch(__dirname + "/c2j.json", (eventType, filename) =>
 {
