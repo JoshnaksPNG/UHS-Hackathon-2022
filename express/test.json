@@ -1,3 +1,33 @@
 {
-    "e": "70998"
+    "currentanimal": {
+        "attributes": [
+            [
+                "caloric",
+                11
+            ],
+            [
+                "caloric",
+                11
+            ],
+            [
+                "sad",
+                2
+            ],
+            [
+                "sad",
+                2
+            ]
+        ],
+        "chest": "bear",
+        "curfood": 10,
+        "head": "gator",
+        "id": 0,
+        "maxfood": 10,
+        "name": "Zoe"
+    },
+    "world": {
+        "day": 0,
+        "feedstore": 100,
+        "petcount": 1
+    }
 }
