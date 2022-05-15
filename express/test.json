@@ -2,6 +2,7 @@
     "currentanimal": {
         "attributes": [
             [
+<<<<<<< HEAD
                 "caloric",
                 11
             ],
@@ -27,6 +28,25 @@
     },
     "world": {
         "day": 0,
+=======
+                "shiny",
+                10
+            ],
+            [
+                "shiny",
+                10
+            ]
+        ],
+        "chest": "rhino",
+        "curfood": 14,
+        "head": "rhino",
+        "id": 0,
+        "maxfood": 14,
+        "name": "Fluffles"
+    },
+    "world": {
+        "day": 43,
+>>>>>>> 72bad2987f466280a3d332c8e2cf5c8dbf9ef6f6
         "feedstore": 100,
         "petcount": 1
     }

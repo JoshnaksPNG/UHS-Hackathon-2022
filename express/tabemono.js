@@ -62,7 +62,8 @@ window.main = () =>
     fetch("test.json").then(response => response.json()).then(data => 
     {
         //Work With Current Data
-        
+        head.src = "./animalAssets/heads/" + yoinkHead(data.currentanimal.head);
+        body.src = "./animalAssets/bodies/" + yoinkBody(data.currentanimal.chest);
 
         ctx.drawImage(bground, 0, 0);
         ctx.drawImage(rbutt, 800, 250);

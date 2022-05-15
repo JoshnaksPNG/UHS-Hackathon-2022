@@ -34,6 +34,10 @@ let read = JSON.parse(fs.readFileSync(__dirname + "/c2j.json"));
 
 fs.watch(__dirname + "/c2j.json", (eventType, filename) =>
 {
-    read = JSON.parse(fs.readFileSync(__dirname + "/c2j.json"));
-    fs.writeFileSync(__dirname + "/express/test.json", JSON.stringify(read, null, 4));
+    setTimeout(() => 
+    {   
+        read = JSON.parse(fs.readFileSync(__dirname + "/c2j.json"));
+        fs.writeFileSync(__dirname + "/express/test.json", JSON.stringify(read, null, 4));
+    }, 5);
+    
 });
