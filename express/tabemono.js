@@ -49,6 +49,11 @@ class Button
 LeftButton = new Button(300, 250, 110, 164);
 RightButton = new Button(800, 250, 110, 164);
 
+const head = new Image();
+const body = new Image();
+head.src = "./animalAssets/heads/ape.png";
+body.src = "./animalAssets/bodies/cat.png";
+
 //Loop Function
 window.main = () =>
 {
@@ -56,11 +61,17 @@ window.main = () =>
 
     fetch("test.json").then(response => response.json()).then(data => 
     {
+        //Work With Current Data
+        
+
         ctx.drawImage(bground, 0, 0);
         ctx.drawImage(rbutt, 800, 250);
         ctx.drawImage(lbutt, 300, 250);
+        ctx.drawImage(body, 400, 200);
+        ctx.drawImage(head, 400, 100);
 
-
+        ctx.font = '12px serif';
+        ctx.fillText(data.attributes, 10, 50);
     });
     
 }
@@ -179,4 +190,110 @@ function exit ()
             currentAnimal: 0
         })
     });
+}
+
+
+//Data Processing
+function yoinkHead(head)
+{
+    switch(head)
+    {
+        case "bear":
+            return "bear.png";
+            break;
+        case "zebra":
+            return "zebra.png";
+            break;
+        case "tiger":
+            return "tiger.png";
+            break;
+        case "hippo":
+            return "hippo.png";
+            break;
+        case "lion":
+            return "lion.png";
+            break;
+        case "rhino":
+            return "rhino.png";
+            break;
+        case "boar":
+            return "boar.png";
+            break;
+        case "ape":
+            return "ape.png";
+            break;
+        case "giraffe":
+            return "girrafe.png";
+            break;
+        case "fox":
+            return "fox.png";
+            break;
+        case "elephant":
+            return "elephant.png";
+            break;
+        case "deer":
+            return "deer.png";
+            break;
+        case "gator":
+            return "gator.png";
+            break;
+        case "yak":
+            return "yak.png";
+            break;
+        case "panda":
+            return "panda.png";
+            break;
+    }
+}
+
+function yoinkBody(chest)
+{
+    switch(chest)
+    {
+        case "bear":
+            return "dog.png";
+            break;
+        case "zebra":
+            return "mouse.png";
+            break;
+        case "tiger":
+            return "cat.png";
+            break;
+        case "hippo":
+            return "pig.png";
+            break;
+        case "lion":
+            return "cat.png";
+            break;
+        case "rhino":
+            return "pig.png";
+            break;
+        case "boar":
+            return "pig.png";
+            break;
+        case "ape":
+            return "rabbit.png";
+            break;
+        case "giraffe":
+            return "bear.png";
+            break;
+        case "fox":
+            return "dog.png";
+            break;
+        case "elephant":
+            return "pig.png";
+            break;
+        case "deer":
+            return "penguin.png";
+            break;
+        case "gator":
+            return "rabbit.png";
+            break;
+        case "yak":
+            return "snake.png";
+            break;
+        case "panda":
+            return "mouse.png";
+            break;
+    }
 }

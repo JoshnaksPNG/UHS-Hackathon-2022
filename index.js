@@ -16,18 +16,24 @@ app.use(bodyParser.json());
 //Routes Definitions
 app.get("/", (req, res) =>
 {
-    //res.status(200).send("IOjBUFHLAF. :)");
     res.sendFile(__dirname +'/express/index.html');
 });
 
 app.post("/request", (req, res) =>
 {
     console.log(req.body);
-    //console.log(res.body);
 });
 
 //Server Activation
 app.listen(port, () =>
 {
     console.log(`Listening to requests on http://localhost:${port}`);
+});
+
+let read = JSON.parse(fs.readFileSync(__dirname + "/c2j.json"));
+
+fs.watch(__dirname + "/c2j.json", (eventType, filename) =>
+{
+    read = JSON.parse(fs.readFileSync(__dirname + "/c2j.json"));
+    fs.writeFileSync(__dirname + "/express/test.json", JSON.stringify(read, null, 4));
 });
