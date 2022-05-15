@@ -98,15 +98,19 @@ window.addEventListener('mousedown', (e) =>
     if(LeftButton.checkClick(e.offsetX, e.offsetY))
     {
         creatureLeft(currentAnID);
+        ++sendID;
     } else if (RightButton.checkClick(e.offsetX, e.offsetY))
     {
         creatureRight(currentAnID);
+        ++sendID;
     } else if (KillButton.checkClick(e.offsetX, e.offsetY))
     {
         killCreature(currentAnID);
+        ++sendID;
     } else if (NewButton.checkClick(e.offsetX, e.offsetY))
     {
         newCreature();
+        ++sendID;
     }
 });
 
