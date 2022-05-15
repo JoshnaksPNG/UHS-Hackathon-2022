@@ -225,27 +225,35 @@ void runloop()
             }
             else if (action.name == "moveleft")
             {
-                if ((pets.size() - 1) < 0)
+                if (pets.size() != 0)
                 {
-                    mainindex = pets.size();
+                    if ((pets.size() - 1) < 0)
+                    {
+                        mainindex = pets.size();
+                    }   
+                    else
+                    {
+                        mainindex = (mainindex - 1);
+                    }
+                    first = pets[mainindex];
                 }
-                else
-                {
-                    mainindex = (mainindex - 1);
-                }
-                first = pets[mainindex];
+                
             }
             else if (action.name == "moveright")
             {
-                if ((pets.size() + 1) > pets.size())
+                if (pets.size() != 0)
                 {
-                    mainindex = 0;
+                    if ((pets.size() + 1) > pets.size())
+                    {
+                        mainindex = 0;
+                    }
+                    else
+                    {
+                        mainindex = (mainindex + 1);
+                    }
+                    first = pets[mainindex];
                 }
-                else
-                {
-                    mainindex = (mainindex + 1);
-                }
-                first = pets[mainindex];
+                
             }
 
             
