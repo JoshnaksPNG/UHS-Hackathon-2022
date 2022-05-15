@@ -63,13 +63,17 @@ window.main = () =>
     {
         //Work With Current Data
         head.src = "./animalAssets/heads/" + yoinkHead(data.currentanimal.head);
+        let widthX = head.naturalWidth/2;
+        let widthY = head.naturalLength/2;
         body.src = "./animalAssets/bodies/" + yoinkBody(data.currentanimal.chest);
-
+        let widthbX = body.naturalWidth/2;
+        let widthbY = body.naturalLength/2;
+        console.log(widthX);
         ctx.drawImage(bground, 0, 0);
         ctx.drawImage(rbutt, 800, 250);
         ctx.drawImage(lbutt, 300, 250);
-        ctx.drawImage(body, 400, 200);
-        ctx.drawImage(head, 400, 100);
+        ctx.drawImage(body, 400, 200, widthbX, widthbY);
+        ctx.drawImage(head, 400, 100, widthX, widthY);
 
         ctx.font = '12px serif';
         ctx.fillText(data.attributes, 10, 50);
