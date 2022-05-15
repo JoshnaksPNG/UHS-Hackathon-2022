@@ -19,6 +19,12 @@ lbutt.src = "./gameAssets/LeftBracket.png";
 const rbutt = new Image();
 rbutt.src = "./gameAssets/RightBracket.png";
 
+const killbutt = new Image();
+killbutt.src = "./gameAssets/THEBUTTON.png";
+
+const newbutt = new Image();
+newbutt.src = "./gameAssets/PurchaseButton.png";
+
 let currentAnID = 0;
 
 let sendID = 1;
@@ -50,6 +56,8 @@ class Button
 //Game elements
 LeftButton = new Button(300, 250, 110, 164);
 RightButton = new Button(800, 250, 110, 164);
+NewButton = new Button (0,0,155, 60);
+KillButton = new Button (0, 400, 164, 123);
 
 const head = new Image();
 const body = new Image();
@@ -73,6 +81,8 @@ window.main = () =>
         ctx.drawImage(lbutt, 300, 250);
         ctx.drawImage(body, 400, 200);
         ctx.drawImage(head, 400, 100);
+        ctx.drawImage(killbutt,0,400);
+        ctx.drawImage(newbutt, 0,0);
 
         ctx.font = '12px serif';
         ctx.fillText(data.attributes, 10, 50);
@@ -91,6 +101,12 @@ window.addEventListener('mousedown', (e) =>
     } else if (RightButton.checkClick(e.offsetX, e.offsetY))
     {
         creatureRight(currentAnID);
+    } else if (KillButton.checkClick(e.offsetX, e.offsetY))
+    {
+        killCreature(currentAnID);
+    } else if (NewButton.checkClick(e.offsetX, e.offsetY))
+    {
+        newCreature();
     }
 });
 
